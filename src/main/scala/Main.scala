@@ -28,9 +28,7 @@ class Seq[T : Ordering] (initialElems: T*)(implicit toStr: ToStr[T]) {
 
   override def toString: String = {
     val t = toStr(fac(factors), elems: _*)
-    var s = ""
-    t.map((el: T) => s = s + el + " ")
-    s
+    t.mkString(" ")
   }
 
   val elems = initialElems.sorted
@@ -44,13 +42,7 @@ class Seq[T : Ordering] (initialElems: T*)(implicit toStr: ToStr[T]) {
   val factors = ListBuffer[Int](1)
 
   def fac(xs: ListBuffer[Int]): Int = {
-    var i=0
-    var sum = 1
-    while (i < xs.length) {
-      sum *= xs(i)
-      i += 1
-    }
-    sum
+    xs.foldLeft(1)((m,n) => m*n)
   }
 
   def multy(a: Int)(implicit ev: Numeric[T]): Unit = {
